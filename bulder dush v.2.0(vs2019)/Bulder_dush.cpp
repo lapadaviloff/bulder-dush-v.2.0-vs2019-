@@ -9,21 +9,23 @@ int main()
 	// 	SetConsoleOutputCP(1251);
 	// 	setlocale(LC_ALL, "Russian");
  
+	
+		Gamesound sound_step1("resource/sound/step1.wav");
+		Gamesound sound_step2("resource/sound/step2.wav");
+		Gamesound sound_stone("resource/sound/stone.wav");
+		Gamesound sound_stone_left("resource/sound/stone_left.wav");
+		Gamesound sound_life("resource/sound/life2.wav");
+		Gamesound sound_almaz("resource/sound/almaz.wav");
+		Gamesound start_door("resource/sound/start_door.wav");
+		Gamesound door("resource/sound/door.wav");
+	
+	
 
-	Gamesound sound_step1("sound/step1.wav");
-	Gamesound sound_step2("sound/step2.wav");
-	Gamesound sound_stone("sound/stone.wav");
-	Gamesound sound_stone_left("sound/stone_left.wav");
-	Gamesound sound_life("sound/life2.wav");
-	Gamesound sound_almaz("sound/almaz.wav");
-	Gamesound start_door("sound/start_door.wav");
-	Gamesound door("sound/door.wav");
-
-	int time = 10, H, W, i, j, win, max_level; //скорость игры,размер игрового поля, количество алмазов для следующего уровня, максимальное количество карт
+	int time = 10, H, W, i, j,  max_level; //скорость игры,размер игрового поля, количество алмазов для следующего уровня, максимальное количество карт
 									   // устанавливается в start
 	int number_level = 1;
 	bool gameover(false);
-	bool flag_win = false;
+	//bool flag_win = false;
 	bool rockfall = false; //пропуск первой проверки камней
 	int quantity;
 
@@ -34,20 +36,37 @@ int main()
 	string** TileMap = start(number_level, &H, &W, &win);
 	int count_enemy = 0;
 	Enemy* enemy = create_enemy(TileMap, H, W, &quantity);
+
 	//    Enemy *stars= create_enemy(TileMap,H,W,&quantity_stars,'X');
 	RenderWindow window(VideoMode(400, 225), "boulder dash");
 
 	Texture texture;
-	texture.loadFromFile("fang.png");
+	
+	try {
+		if (!(texture.loadFromFile("resource/fang.png")))throw L"texture not load";//загружаем в него звук
+	}
+	catch (LPCTSTR s) {
+		MessageBox(GetActiveWindow(), s, L"Boulder dash", MB_ICONERROR);
+		exit(1);
+	}
+	Font font;//шрифт 
+	
+	try {
+		if (!(font.loadFromFile("resource/Impact Regular.ttf")))throw L"Font not load";//загружаем в него звук
+	}
+	catch (LPCTSTR s) {
+		MessageBox(GetActiveWindow(), s, L"Boulder dash", MB_ICONERROR);
+		exit(1);
+	}
 
 	Sprite sprite_map(texture);
 
 	float currentFrame = 0;
 	Player mario(texture, TileMap);
 
-	std::ifstream  fil("game.cfg");
+	std::ifstream  fil("resource/game.cfg");
 	if (!fil.is_open()) {
-		MessageBox(GetActiveWindow(), L"not file map!", L"Boulder dash", MB_ICONERROR);
+		MessageBox(GetActiveWindow(), L"not load game.cfg!", L"Boulder dash", MB_ICONERROR);
 		exit(1);
 	}
 	string temp = "";
@@ -97,7 +116,6 @@ int main()
 		if (pldy - mario.dy == 0) { rockfall = true; pldy = mario.dy; }
 		else { rockfall = false; pldy = mario.dy; }
 		mario.update(time);
-
 		show(window, sprite_map, TileMap, &H, &W, flash,mario);
 		kill = move_enemy(TileMap, enemy, quantity, mario);
 
@@ -132,13 +150,14 @@ int main()
 						TileMap = start(number_level, &H, &W, &win);
 						mario.TileMap = TileMap;
 						set_player(window, sprite_map, mario, TileMap, &H, &W, time, start_door);
-						Enemy* enemy = create_enemy(TileMap, H, W, &quantity);
+					    enemy = create_enemy(TileMap, H, W, &quantity);
 
 					}
 
 					if (kill == 2)
 					{   // если камень попал по игроку
 						enemy[count_enemy].live = 0;
+						//quantity--;
 						kill = 0;
 						int x, y;
 						for (int c = 0; c < 2; c++) {
@@ -156,9 +175,10 @@ int main()
 						}
 
 					}
-					if (kill == 3)
+					/*if (kill == 3)
 					{   // если камень попал по игроку
 						enemy[count_enemy].live = 0;
+						//quantity--;
 						kill = 0;
 						int x, y;
 						for (int c = 0; c < 2; c++) {
@@ -176,7 +196,7 @@ int main()
 						}
 
 					}
-
+					*/
 
 
 				}
@@ -196,9 +216,8 @@ int main()
 
 		std::ostringstream shift;    // объявили переменную
 		shift << mario.diamant;
-		Font font;//шрифт 
-		font.loadFromFile("Impact Regular.ttf");//передаем нашему шрифту файл шрифта
-
+	
+		
 		Text text1("", font, 10);//создаем объект текст. закидываем в объект текст строку, шрифт, размер шрифта(в пикселях);//сам объект текст (не строка)
 		text1.setOutlineColor(Color::White);//покрасили текст в красный. если убрать эту строку, то по умолчанию он белый
 	   // text.setStyle(sf::Text::Bold | sf::Text::Underlined);//жирный и подчеркнутый текст. по умолчанию он "худой":)) и не подчеркнутый
@@ -264,7 +283,7 @@ int main()
 					window.clear(Color(25, 29, 25));
 					Text text2("", font, 40);
 					text2.setPosition(80, 80);//задаем позицию текста, центр камеры
-					text2.setString(" END OF GAME  ");
+					text2.setString(" YOU WIN  ");
 					window.draw(text2);//рисую этот текст
 					while (window.pollEvent(event)) {
 						if (event.type == Event::Closed) { window.close(); exit(0); }
@@ -275,12 +294,20 @@ int main()
 				}
 			}
 			mario.diamant = 0;
+			//mario.offsetX = 0;
+			//mario.offsetY = 0;
 			flag_win = false;
 			delete_map(TileMap, &H, enemy, quantity);
+			
 			TileMap = start(number_level, &H, &W, &win);
 			mario.TileMap = TileMap;
 			set_player(window, sprite_map, mario, TileMap, &H, &W, time, start_door);
+			enemy = create_enemy(TileMap, H, W, &quantity);
+			
+		
+		
 		}
+
 	}
 	return 0;
 }
@@ -365,9 +392,10 @@ string** start(int number_level, int* H_, int* W_, int* win_) {
 	int win;
 	int H, W;
 	string temp = "";
-	string level = "level";
+	string level = "resource/maps/level";
 	level += int_to_string(number_level);
 	level += ".map";
+	
 	std::ifstream  fil(level); // (ВВЕЛИ НЕ КОРРЕКТНОЕ ИМЯ ФАЙЛА)
 	if (!fil.is_open()) { // если файл не открыт
 		MessageBox(GetActiveWindow(), L"not file map!", L"Boulder dash", MB_ICONERROR);
@@ -417,8 +445,11 @@ void delete_map(string * *TileMap, int* H_, Enemy * enemy, int qantity) {
 		delete[] TileMap[i];
 	}
 	delete[]TileMap;
-	if (qantity != 0)delete[] enemy;
-	else enemy = nullptr;
+	
+	if (qantity >1)delete[] enemy;
+	
+	else delete enemy;
+
 
 }
 //*************************************************************************************************************************************************
@@ -529,15 +560,16 @@ Enemy* create_enemy(string * *Tilemap, int H, int W, int* quantity) {
 }
 //************************************************************************************************************************************
 int move_enemy(string * *TileMap, Enemy * enemy, int quantity, Player player) {
-
 	if (quantity == 0)return 0;
 	int player_x = player.rect.left / 16;
 	int player_y = player.rect.top / 16;
-
+	
 	for (int c = 0; c < quantity; c++) {
 		if (enemy[c].live == 0)continue;
 
 		if ((enemy[c].y == player_y && enemy[c].x - 1 == player_x) || (enemy[c].y + 1 == player_y && enemy[c].x == player_x) || (enemy[c].y == player_y && enemy[c].x + 1 == player_x) || (enemy[c].y - 1 == player_y && enemy[c].x == player_x))return 1;
+		
+	
 		switch (enemy[c].step) {
 
 		case 1:
@@ -575,7 +607,7 @@ int move_enemy(string * *TileMap, Enemy * enemy, int quantity, Player player) {
 		case 3:
 
 			if (TileMap[enemy[c].y + 1][enemy[c].x] == ' ') {
-				TileMap[enemy[c].y + 1][enemy[c].x] = 'C';
+				TileMap[enemy[c].y + 1][enemy[c].x] = enemy[c].symbol;;//
 				TileMap[enemy[c].y][enemy[c].x] = ' ';
 				enemy[c].y++;
 				enemy[c].step = 2;

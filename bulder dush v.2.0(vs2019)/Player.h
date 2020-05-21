@@ -10,7 +10,6 @@ class Player {
 private:
 	
 	float currentFrame; // смена спрайта
-	
 	SoundBuffer sound_bufer;
 	Sound almaz;
 public:
@@ -21,6 +20,7 @@ public:
 	int diamant;         // количество собранных алмазов
 	IntRect rect; //координаты и размер спрайта
 	int dx, dy;    //перемещение вверх и низ
+	
 	
 public:
 	Player(Texture& image, string** t);

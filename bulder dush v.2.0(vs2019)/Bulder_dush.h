@@ -11,6 +11,7 @@
 #include"Player.h"
 #include"Flash.h"
 #include"Enemy.h"
+#include "Win.h"
 using namespace sf;
 using namespace std;
 

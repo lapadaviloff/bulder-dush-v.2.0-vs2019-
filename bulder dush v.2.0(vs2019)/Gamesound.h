@@ -1,6 +1,7 @@
 #ifndef GAMESOUND_H_
 #define GAMESOUND_H_
 #include <SFML/Audio.hpp>
+#include <Windows.h>
 using namespace sf;
 using namespace std;
 

@@ -12,8 +12,15 @@ Player::Player(Texture& image, string** t)
 		live = 1;
 		offsetX = 0;
 	    offsetY = 0;
-		sound_bufer.loadFromFile("sound/almaz.wav");//загружаем в него звук
 
+		try {
+			if (!(sound_bufer.loadFromFile("resource/sound/almaz.wav")))throw L"sound not load";//загружаем в него звук
+		}
+		catch (LPCTSTR s) {
+			MessageBox(GetActiveWindow(), s, L"Boulder dash", MB_ICONERROR);
+			exit(1);
+
+		}
 		almaz.setBuffer(sound_bufer);
 	}
 
