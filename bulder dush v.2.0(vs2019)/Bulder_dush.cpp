@@ -22,10 +22,11 @@ int main()
 	
 
 	int time = 10, H, W, i, j,  max_level; //скорость игры,размер игрового поля, количество алмазов для следующего уровня, максимальное количество карт
-									   // устанавливается в start
+	Win win;							   // устанавливается в start
 	int number_level = 1;
 	bool gameover(false);
 	//bool flag_win = false;
+	win.flag_win = false;
 	bool rockfall = false; //пропуск первой проверки камней
 	int quantity;
 
@@ -155,7 +156,7 @@ int main()
 					}
 
 					if (kill == 2)
-					{   // если камень попал по игроку
+					{   // если камень попал по врагу
 						enemy[count_enemy].live = 0;
 						//quantity--;
 						kill = 0;
@@ -253,7 +254,7 @@ int main()
 			while (1) {
 				window.clear(Color(25, 29, 25));
 				Text text2("", font, 40);
-				text2.setPosition(80, 80);//задаем позицию текста, центр камеры
+				text2.setPosition(100, 80);//задаем позицию текста, центр камеры
 				text2.setString(" GAME  OVER ");
 				window.draw(text2);//рисую этот текст
 				window.display();
@@ -264,14 +265,19 @@ int main()
 				}
 			}
 		}
-		if (mario.diamant >= win && flag_win == false) { //при наборе нужного количестве алмазов открываем дверь
-			flag_win = true;
+		if (mario.diamant >= win.win && win.flag_win == false) { //при наборе нужного количестве алмазов открываем дверь
+			win.flag_win = true;
+			/*
 			for (i = 0; i < H; i++) {
 				for (j = 0; j < W; j++)
 				{
-					if (TileMap[i][j] == 'E') { TileMap[i][j] = 'e'; door.play(); }
+					if (win.x==i||win.y==j) { TileMap[i][j] = 'e'; door.play(); }
 				}
 			}
+		
+		*/
+			TileMap[win.x][win.y] = 'e'; door.play();
+		
 		}
 		i = (mario.rect.top) / 16;
 		j = (mario.rect.left) / 16;
@@ -296,7 +302,7 @@ int main()
 			mario.diamant = 0;
 			//mario.offsetX = 0;
 			//mario.offsetY = 0;
-			flag_win = false;
+			win.flag_win = false;
 			delete_map(TileMap, &H, enemy, quantity);
 			
 			TileMap = start(number_level, &H, &W, &win);
@@ -387,9 +393,9 @@ string int_to_string(int n) {
 }
 
 //***********************************************************************************************************************************
-string** start(int number_level, int* H_, int* W_, int* win_) {
+string** start(int number_level, int* H_, int* W_, Win* win) {
 
-	int win;
+	//int win;
 	int H, W;
 	string temp = "";
 	string level = "resource/maps/level";
@@ -402,7 +408,7 @@ string** start(int number_level, int* H_, int* W_, int* win_) {
 		exit(1);
 	}
 	getline(fil, temp, '\n');
-	win = string_to_int(temp);
+	win->win = string_to_int(temp);
 	getline(fil, temp, '\n');
 	H = string_to_int(temp);
 	getline(fil, temp, '\n');
@@ -433,7 +439,21 @@ string** start(int number_level, int* H_, int* W_, int* win_) {
 		exit(1);
 	}
 	fil.close(); // закрываем файл
-	*win_ = win;
+
+
+	for (int i = 0; i < H; i++)
+		for (int j = 0; j < W; j++)
+		{
+		
+			if (TileMap[i][j] == 'E') {	
+				win->x = i;
+				win->y = j;
+				break;
+			}
+
+
+		}
+	
 	*H_ = H;
 	*W_ = W;
 	return TileMap;

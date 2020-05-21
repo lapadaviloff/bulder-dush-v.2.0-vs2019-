@@ -3,7 +3,7 @@
 struct Win
 {
 	int win,x,y;
-	bool flag_win
+	bool flag_win;
 };
 
 #endif // !WIN_H_

@@ -18,7 +18,7 @@ using namespace std;
 int gravity(string**, int, int, int, int, Gamesound&, Gamesound&, Enemy* enemy, int qantity, int* count_enemy);
 int string_to_int(string);
 string int_to_string(int);
-string** start(int number_level, int* H_, int* W_, int* win_);
+string** start(int number_level, int* H_, int* W_, Win* win);
 void delete_map(string** TileMap, int* H, Enemy* cube, int qantity);
 void show(RenderWindow&, Sprite&, string** TileMap, int* H, int* W, Flash flash, Player player);
 void set_player(RenderWindow& window, Sprite& sprite, Player& player, string** TileMap, int* H, int* W, int time, Gamesound& sound);
