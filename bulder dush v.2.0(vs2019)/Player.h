@@ -29,5 +29,6 @@ public:
 
 	void Collision();
 
+	//string** TileMap уничтожается в delete map
 };
 #endif

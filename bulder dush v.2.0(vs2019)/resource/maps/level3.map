@@ -1,16 +1,27 @@
-7
-12
-50
-HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-HCCCC    XXX       RRR    CCCXX  W    CCCCCCCC   H
-H SCCXX  DCC   XXC RRRXXXCCCCCX  W   D    R XXXX H
-H CCC    XXX CCCCCCXXXXXXXXX     W  CCC   D      H
-HXXXX    CCC X      W            W XXXXXXXXXXX   H
-HCCCCC    XXXXCC   CCC        WWWW CCCCCCCCCCC   H
-HXXXXX        CCC                W    D     D    H
-HCCCCXXXCCCCCCC XXXXC     C      W               H
-H  XXXXXXX       C  CCCCCCC     WW  XXXXXXXXXX   H
-H CCCCCCCCC             XXXXXXCCCCCCCCCCCCCCCCCC H
-H    W     XXXXXXXXXXXXX X   XXXXXXXXXX  DD    E H
-HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-
+25
+24
+70
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+H-----------------------------------------------------------D--------H
+H----S---------R-------------------R---------------------------------H
+H-------------DR------------------DD------------------------D--------H
+H--------------RD----------------------------X----R------------------H
+H--------------R-------------------WD-------- --RRR------------------H
+H--------------------  C----------WW--------- ----R----------D-------H
+H-------DD--------W-------------------------- -----------------------H
+H-----------------W--DDD--------------------- ----R------------------H
+H-----------------W-----------------D-------- -----------------------H
+H-------------------------------------------- --------------RR-------H
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH---------HHHHH
+H--------------------------------------------------------------------H
+H--D------------RRRR-----------X-------RRRRRRRR----------------------H
+H--D------------RD-R----------- ---------D---------------------------H
+H--D------------R--R---------      ------D---------------R-----------H
+H---------------R--R----------- ---------D--DDD----------------------H
+H-------DD--------------------- ----------------  -------------------H
+H----------------------------------------------  --------R-----------H
+H---------------------------------------------  ------D--------------H
+H-----------------D-----DWWWWWWWWD---------C      -------------------H
+H--------------------------------------------------------------------H
+H--------------------------------------D----------------------------EH
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
